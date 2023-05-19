@@ -1,0 +1,26 @@
+.Header {
+	display: flex;
+	justify-content: space-between;
+	padding: 32px 33px 21px 33px;
+	border-bottom: solid 4px #E4E4E4;
+	align-items: center;
+	.title {
+		position: relative;
+		width: 124px;
+		height: 19.67px;
+	}
+	.cartDiv {
+		.cartIcon {
+			cursor: pointer;
+			position: relative;
+			width: 42px;
+			height: 32px;
+		}
+	}
+}
+
+@media only screen and (min-width: 992px) {
+	.Header {
+		padding: 32px 0px 21px 0px;
+	}
+}

@@ -1,95 +1,63 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+import Header from '@/app/components/Header'
+import FeaturedItem from '@/app/components/FeaturedItem'
+import style from '@/app/styles/homepage.module.scss'
+import Products from '@/app/components/Products'
 
-export default function Home() {
-  return (
-    <main className={styles.main}>
-      <div className={styles.description}>
-        <p>
-          Get started by editing&nbsp;
-          <code className={styles.code}>app/page.js</code>
-        </p>
-        <div>
-          <a
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className={styles.vercelLogo}
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+const dev = process.env.NODE_ENV !== 'production'
+const server = dev
+    ? 'http://localhost:3000'
+    : 'https://your_deployment.server.com'
 
-      <div className={styles.center}>
-        <Image
-          className={styles.logo}
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+async function getProducts() {
+    try {
+        let response = await fetch(`${server}/api/products/1`)
+        let readyResponse = await response.json()
+        let products = readyResponse.products
+        let curPage = readyResponse.curPage
+        let numOfPages = readyResponse.pages
+        let minSet = readyResponse.minSet
+        let maxSet = readyResponse.maxSet
+        let ordered_pages = readyResponse.ordered_pages
 
-      <div className={styles.grid}>
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Docs <span>-&gt;</span>
-          </h2>
-          <p>Find in-depth information about Next.js features and API.</p>
-        </a>
+        let data = {
+            products: products,
+            curPage: curPage,
+            numOfPages: numOfPages,
+            minSet: minSet,
+            maxSet: maxSet,
+            ordered_Pages: ordered_pages,
+        }
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Learn <span>-&gt;</span>
-          </h2>
-          <p>Learn about Next.js in an interactive course with&nbsp;quizzes!</p>
-        </a>
+        return data
+    } catch (e) {
+        console.error(e)
+    }
+}
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Templates <span>-&gt;</span>
-          </h2>
-          <p>Explore the Next.js 13 playground.</p>
-        </a>
-
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className={styles.card}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2>
-            Deploy <span>-&gt;</span>
-          </h2>
-          <p>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
-    </main>
-  )
+export default async function Home() {
+    let data = await getProducts()
+    let products = data.products
+    let curPage = data.curPage
+    let numOfPages = data.numOfPages
+    let minSet = data.minSet
+    let maxSet = data.maxSet
+    let ordered_Pages = data.ordered_Pages
+    let featuredItem = products.filter((product) => product.featured == true)[0]
+    
+    return (
+        <>
+            <div className={style.container}>
+                <Header />
+                <FeaturedItem featuredItem={featuredItem} />
+                <Products
+                    products={products}
+                    curPage={curPage}
+                    numOfPages={numOfPages}
+                    minSet={minSet}
+                    maxSet={maxSet}
+                    ordered_Pages={ordered_Pages}
+                />
+            </div>
+        </>
+    )
 }

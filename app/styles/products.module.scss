@@ -1,0 +1,106 @@
+.ImageDiv {
+	position: relative;
+	height: 70vh;
+	width: 100%;
+}
+
+.pageContainer {
+	padding: 60px 25px;
+}
+
+
+.grid {
+	display: grid;
+	grid-template-columns: 100%;
+	row-gap: 32px;
+}
+
+.category {
+	color: #656565;
+	font-weight: 700;
+	font-size: 22px;
+	margin: 0;
+	padding-top: 10px;
+	padding-bottom: 10px;
+}
+
+.title {
+	font-size: 34px;
+	font-weight: 700;
+	margin: 0;
+	padding-bottom: 12px;
+}
+
+.price {
+	color: #656565;
+	font-weight: 700;
+	font-size: 29px;
+	margin: 0;
+}
+
+.bestSeller {
+	width: 170px;
+	padding: 10px;
+	background-color: white;
+	position: absolute;
+	top: 0;
+	left: 0;
+	text-align: center;
+
+	p {
+		font-weight: 400;
+		font-size: 20px;
+		margin: 0;
+	}
+}
+
+.paginationContainer {
+	margin: 80px auto 0 auto;
+	display: flex;
+	justify-content: space-between;
+	max-width: 230px;
+	width: 100%;
+}
+
+.number {
+	font-size: 29px;
+	font-weight: 400px;
+	color: #B4B4B4;
+	cursor: pointer;
+}
+
+.curNum {
+	font-size: 29px;
+	font-weight: 400px;
+	color: black;
+}
+
+.numContainer {
+	max-width: 150px;
+	display: flex;
+	justify-content: space-between;
+	width: 100%;
+	margin: auto;
+}
+
+.moveArr {
+	position: relative;
+	width: 13px;
+	height: 32px;
+	cursor: pointer;
+}
+
+
+@media only screen and (min-width: 992px) {
+	.pageContainer {
+		padding: 60px 0px;
+	}
+
+	.grid {
+		grid-template-columns: 33% 33% 33%;
+	}
+
+	.ImageDiv {
+		max-width: 290px;
+	}
+}

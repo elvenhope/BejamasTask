@@ -1,0 +1,150 @@
+.container {
+	padding: 0 14px;
+	border-bottom: solid 4px #E4E4E4;
+}
+
+.title {
+	p {
+		font-size: 32px;
+		font-weight: 700;
+	}
+}
+
+.PictureContainer {
+	.picture {
+		position: relative;
+		height: 30vh;
+		max-height: 550px;
+		cursor: pointer;
+	}
+}
+
+.pictureOverlay {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	background-color: white;
+	padding: 5px 40px;
+
+	p {
+		font-weight: 700;
+		font-size: 15px;
+	}
+}
+
+.button {
+	background-color: black;
+	padding: 15px 40px;
+	text-align: center;
+	text-decoration: none;
+	color: white;
+	border: none;
+	cursor: pointer;
+	width: 100%;
+	margin: 30px 0;
+	font-size: 23px;
+	font-weight: 500;
+}
+
+.mobile {
+	display: block;
+}
+
+.desktop {
+	display: none;
+}
+
+.footer {
+
+}
+
+.descHeader {
+	p {
+		font-size: 22px;
+		font-weight: 700;
+	}
+}
+
+.description {
+	font-size: 18px;
+	font-weight: 400;
+	color: #656565;
+}
+
+.descriptionBig {
+	font-size: 22px;
+	font-weight: 400;
+	color: #656565;
+}
+
+.ImageRow {
+	display: flex;
+	overflow-x: scroll;
+	.ImageContainer {
+		position: relative;
+		width: 100px;
+		height: 122px;
+	}
+}
+
+@media only screen and (max-width: 600px) {}
+
+/* Small devices (portrait tablets and large phones, 600px and up) */
+@media only screen and (min-width: 600px) {
+	.PictureContainer {
+		.picture {
+			height: 40vh;
+		}
+	}
+}
+
+/* Medium devices (landscape tablets, 768px and up) */
+@media only screen and (min-width: 768px) {
+	.PictureContainer {
+		.picture {
+			height: 50vh;
+		}
+	}
+}
+
+/* Large devices (laptops/desktops, 992px and up) */
+@media only screen and (min-width: 992px) {
+	.PictureContainer {
+		.picture {
+			height: 60vh;
+		}
+	}
+	.mobile {
+		display: none;
+	}
+	.desktop {
+		display: block;
+	}
+	.header {
+		display: flex;
+		justify-content: space-between;
+	}
+	.button {
+		max-width: 260px;
+		padding: 15px 10px;
+	}
+	.footer {
+		display: flex;
+		justify-content: space-between;
+	}
+	.left {
+		max-width: 50%;
+	}
+	.container {
+		padding: 0;
+	}
+}
+
+/* Extra large devices (large laptops and desktops, 1200px and up) */
+@media only screen and (min-width: 1200px) {
+	.PictureContainer {
+		.picture {
+			height: 70vh;
+		}
+	}
+}
