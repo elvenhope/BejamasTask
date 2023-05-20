@@ -40,10 +40,18 @@ async function getProducts(page) {
 function addToCart(product) {
     let curCart = localStorage.getItem('Cart')
     if (curCart) {
+        let found = false
         let cart = JSON.parse(curCart)
-        cart.push(product)
-        localStorage.setItem('Cart', JSON.stringify(cart))
-        window.dispatchEvent(new Event('storage'))
+        cart.forEach(item => {
+            if(item._id == product._id) {
+                found = true
+            }
+        });
+        if(!found) {
+            cart.push(product)
+            localStorage.setItem('Cart', JSON.stringify(cart))
+            window.dispatchEvent(new Event('storage'))
+        }
     } else {
         let cart = []
         cart.push(product)

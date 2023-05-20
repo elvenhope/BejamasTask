@@ -30,22 +30,16 @@ function Header() {
     }
 
     function deleteFromCart(itemID) {
-        let indexToRemove
-        for (let i = 0; i < cart.length; i++) {
-            if (itemID == cart[i]._id) {
-                indexToRemove = i
-                break
-            }
-        }
-        if (indexToRemove == 0 && cart.length == 1) {
+        if (cart.length == 1) {
             updateCart([])
             localStorage.setItem('Cart', JSON.stringify([]))
         } else {
-            localStorage.setItem(
-                'Cart',
-                JSON.stringify(cart.splice(indexToRemove, 1))
-            )
-            updateCart(cart.splice(indexToRemove, 1))
+            let newCart = cart.filter((item) => {
+                return item._id != itemID
+            })
+
+            localStorage.setItem('Cart', JSON.stringify(newCart))
+            updateCart(newCart)
         }
     }
 
