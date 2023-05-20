@@ -13,7 +13,7 @@ function SimilarItems(props) {
                 </div>
                 <div className={style.ImageRow}>
                     {items.map((item, i) => (
-                        <div className={style.ImageContainer}>
+                        <div className={style.ImageContainer} key={i}>
                             <Image
                                 src={item.src}
                                 alt={item.alt}

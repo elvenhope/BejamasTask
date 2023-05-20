@@ -1,9 +1,10 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useRef } from 'react'
 import Product from '@/app/components/ProductSingle'
 import style from '@/app/styles/products.module.scss'
 import Pagination from './Pagination'
+import FeaturedItem from '@/app/components/FeaturedItem'
 
 const dev = process.env.NODE_ENV !== 'production'
 const server = dev
@@ -36,6 +37,10 @@ async function getProducts(page) {
     }
 }
 
+function addToCart(product) {
+    console.log(product);
+}
+
 function products(props) {
 	const [productsHolder, updateProducts] = useState(props.products)
     const [curPage, updateCurPage] = useState(props.curPage)
@@ -43,6 +48,7 @@ function products(props) {
     const [minSet, updateMinSet] = useState(props.minSet)
     const [maxSet, updateMaxSet] = useState(props.maxSet)
     const [ordered_Pages, updateOrdered_Pages] = useState(props.ordered_Pages)
+    const scrollPoint = useRef(null)
 
     async function changePage(page) {
         let data = await getProducts(page)
@@ -55,21 +61,28 @@ function products(props) {
     }
 
     return (
-        <div className={style.pageContainer}>
-            <div className={style.grid}>
-                {productsHolder.map((product, i) => (
-                    <Product data={product} key={i} />
-                ))}
-            </div>
-            <Pagination
-                current={curPage}
-                total={numOfPages}
-                changePage={changePage}
-                minSet={minSet}
-                maxSet={maxSet}
-                ordered_Pages={ordered_Pages}
+        <>
+            <FeaturedItem
+                featuredItem={props.featuredItem}
+                addToCart={addToCart}
             />
-        </div>
+            <div className={style.pageContainer}>
+                <div className={style.grid} ref={scrollPoint}>
+                    {productsHolder.map((product, i) => (
+                        <Product data={product} key={i} addToCart={addToCart} />
+                    ))}
+                </div>
+                <Pagination
+                    current={curPage}
+                    total={numOfPages}
+                    changePage={changePage}
+                    minSet={minSet}
+                    maxSet={maxSet}
+                    ordered_Pages={ordered_Pages}
+                    scrollPoint={scrollPoint}
+                />
+            </div>
+        </>
     )
 }
 

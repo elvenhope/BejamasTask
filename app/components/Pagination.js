@@ -9,10 +9,16 @@ function Pagination(props) {
     let curPage = parseInt(props.current)
     let curSet = Math.ceil(curPage / 4) - 1
 
+    const executeScroll = () =>
+        props.scrollPoint.current.scrollIntoView({
+            behavior: 'smooth',
+            block: 'start',
+        })
     function changeNumbers(arg) {
         curPage = arg
         props.changePage(curPage)
         displayNumbers()
+        executeScroll()
     }
 
     function moveBackward() {

@@ -1,5 +1,4 @@
 import Header from '@/app/components/Header'
-import FeaturedItem from '@/app/components/FeaturedItem'
 import style from '@/app/styles/homepage.module.scss'
 import Products from '@/app/components/Products'
 
@@ -42,13 +41,14 @@ export default async function Home() {
     let minSet = data.minSet
     let maxSet = data.maxSet
     let ordered_Pages = data.ordered_Pages
-    let featuredItem = products.filter((product) => product.featured == true)[0]
+    let featuredItem = products.filter(
+        (product) => product.featured == true
+    )[0]
     
     return (
         <>
             <div className={style.container}>
                 <Header />
-                <FeaturedItem featuredItem={featuredItem} />
                 <Products
                     products={products}
                     curPage={curPage}
@@ -56,6 +56,7 @@ export default async function Home() {
                     minSet={minSet}
                     maxSet={maxSet}
                     ordered_Pages={ordered_Pages}
+                    featuredItem={featuredItem}
                 />
             </div>
         </>

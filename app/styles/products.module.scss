@@ -4,6 +4,26 @@
 	width: 100%;
 }
 
+.addToCartBtn {
+	background-color: black;
+	padding: 15px 40px;
+	text-align: center;
+	text-decoration: none;
+	color: white;
+	border: none;
+	cursor: pointer;
+	width: 100%;
+	font-size: 23px;
+	font-weight: 500;
+	position: absolute;
+	bottom: 0;
+	box-sizing: border-box;
+}
+
+.mobile {
+	display: none;
+}
+
 .pageContainer {
 	padding: 60px 25px;
 }
@@ -102,5 +122,14 @@
 
 	.ImageDiv {
 		max-width: 290px;
+	}
+	.addToCartBtn:hover {
+		display: block;
+	}
+}
+
+@media only screen and (max-width: 991px) {
+	.mobile {
+		display: block;
 	}
 }

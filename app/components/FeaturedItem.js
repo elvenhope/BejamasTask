@@ -6,6 +6,10 @@ import SimilarItems from './SimilarItems'
 function FeaturedItem(props) {
     let item = props.featuredItem
 
+    function addToCart() {
+        props.addToCart(item)
+    }
+
     return (
         <>
             <div className={style.container}>
@@ -13,7 +17,10 @@ function FeaturedItem(props) {
                     <div className={style.title}>
                         <p>{item.name}</p>
                     </div>
-                    <button className={style.desktop + ' ' + style.button}>
+                    <button
+                        className={style.desktop + ' ' + style.button}
+                        onClick={addToCart}
+                    >
                         ADD TO CART
                     </button>
                 </div>
@@ -32,7 +39,10 @@ function FeaturedItem(props) {
                         </div>
                     </div>
                 </div>
-                <button className={style.mobile + ' ' + style.button}>
+                <button
+                    className={style.mobile + ' ' + style.button}
+                    onClick={addToCart}
+                >
                     ADD TO CART
                 </button>
                 <div className={style.footer}>
@@ -54,10 +64,10 @@ function FeaturedItem(props) {
                             </div>
                             <div className={style.descriptionBig}>
                                 <p>
-                                    Size: {item.details.dimmentions.width} x 
+                                    Size: {item.details.dimmentions.width} x
                                     {item.details.dimmentions.height}
                                 </p>
-								<p>Size: {item.details.size / 1024} MB </p>
+                                <p>Size: {item.details.size / 1024} MB </p>
                             </div>
                         </div>
                     </div>
