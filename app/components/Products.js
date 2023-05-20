@@ -28,7 +28,7 @@ async function getProducts(page) {
             numOfPages: numOfPages,
             minSet: minSet,
             maxSet: maxSet,
-            ordered_Pages: ordered_pages
+            ordered_Pages: ordered_pages,
         }
 
         return data
@@ -38,11 +38,22 @@ async function getProducts(page) {
 }
 
 function addToCart(product) {
-    console.log(product);
+    let curCart = localStorage.getItem('Cart')
+    if (curCart) {
+        let cart = JSON.parse(curCart)
+        cart.push(product)
+        localStorage.setItem('Cart', JSON.stringify(cart))
+        window.dispatchEvent(new Event('storage'))
+    } else {
+        let cart = []
+        cart.push(product)
+        localStorage.setItem('Cart', JSON.stringify(cart))
+        window.dispatchEvent(new Event('storage'))
+    }
 }
 
 function products(props) {
-	const [productsHolder, updateProducts] = useState(props.products)
+    const [productsHolder, updateProducts] = useState(props.products)
     const [curPage, updateCurPage] = useState(props.curPage)
     const [numOfPages, updateNumOfPages] = useState(props.numOfPages)
     const [minSet, updateMinSet] = useState(props.minSet)

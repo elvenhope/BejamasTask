@@ -4,17 +4,100 @@
 	padding: 32px 33px 21px 33px;
 	border-bottom: solid 4px #E4E4E4;
 	align-items: center;
+	position: relative;
+
 	.title {
 		position: relative;
 		width: 124px;
 		height: 19.67px;
 	}
+
 	.cartDiv {
+		position: relative;
+
 		.cartIcon {
 			cursor: pointer;
 			position: relative;
 			width: 42px;
 			height: 32px;
+		}
+
+		.cartCount {
+			background-color: black;
+			color: white;
+			font-size: 20px;
+			font-weight: 700;
+			text-align: center;
+			position: absolute;
+			bottom: -19px;
+			right: -12px;
+			padding: 0 5px;
+		}
+	}
+
+	.cartPopup {
+		position: absolute;
+		border: 4px solid #E4E4E4;
+		background-color: white;
+		width: 310px;
+		right: 0;
+		top: 100%;
+		padding: 28px;
+		z-index: 1;
+
+		.productList {
+			.cartItem {
+				border-bottom: 1px #C2C2C2 solid;
+				padding-bottom: 24px;
+				margin-bottom: 10px;
+
+				.clearBtnDiv {
+					display: flex;
+					align-items: flex-end;
+					margin-bottom: 10px;
+				}
+
+				.cartItemContent {
+					display: flex;
+					justify-content: space-between;
+
+					.cartItemText {
+						width: 50%;
+						display: flex;
+						flex-direction: column;
+
+						.cartItemTitle {
+							font-weight: 700;
+							font-size: 20px;
+							padding-bottom: 10px;
+						}
+
+						.cartItemPrice {
+							font-weight: 400;
+							font-size: 29px;
+							color: #656565;
+						}
+					}
+
+					.cartItemPicture {}
+				}
+			}
+		}
+
+		.clearAll {
+			border: 3px solid #000000;
+			background-color: white;
+			color: black;
+			font-weight: 500;
+			font-size: 23px;
+			text-align: center;
+			padding: 10px;
+			cursor: pointer;
+		}
+		.emptyCart {
+			font-weight: 500;
+			font-size: 23px;
+			text-align: center;
 		}
 	}
 }
