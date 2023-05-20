@@ -22,13 +22,39 @@ function Pagination(props) {
     }
 
     function moveBackward() {
-        let TargetPage = props.ordered_Pages[curSet - 1][0]
-        changeNumbers(TargetPage)
+        if(curPage == props.ordered_Pages[curSet][0]) {
+            let TargetPage = props.ordered_Pages[curSet - 1][0]
+            changeNumbers(TargetPage)
+        } else {
+            changeNumbers(curPage - 1)
+        }
     }
 
     function moveForward() {
-        let TargetPage = props.ordered_Pages[curSet + 1][0]
-        changeNumbers(TargetPage)
+        if (
+            curPage == props.ordered_Pages[curSet][props.ordered_Pages[curSet].length - 1]
+        ) {
+            let TargetPage = props.ordered_Pages[curSet + 1][0]
+            changeNumbers(TargetPage)
+        } else {
+            changeNumbers(curPage + 1)
+        }
+    }
+
+    function isTheFirstPage() {
+        if(curPage == 1) {
+            return true
+        } else {
+            return false
+        }
+    }
+
+    function isTheLastPage() {
+        if(curPage == props.ordered_Pages[props.maxSet][props.ordered_Pages[props.maxSet].length - 1]) {
+            return true
+        } else {
+            return false
+        }
     }
 
     function displayNumbers() {
@@ -64,7 +90,7 @@ function Pagination(props) {
 
     return (
         <div className={style.paginationContainer}>
-            {curSet != props.minSet ? (
+            {!isTheFirstPage() ? (
                 <div className={style.moveArr} onClick={moveBackward}>
                     <Image
                         src="/backwardArr.svg"
@@ -79,7 +105,7 @@ function Pagination(props) {
                 ''
             )}
             <div className={style.numContainer}>{pages}</div>
-            {curSet != props.maxSet ? (
+            {!isTheLastPage() ? (
                 <div className={style.moveArr} onClick={moveForward}>
                     <Image
                         src="/forwardArr.svg"
