@@ -110,6 +110,15 @@ function Header() {
         }
     }
 
+    function showCartValid() {
+        if(cart) {
+            updateShowCart(true)
+        } else {
+            updateCart([])
+            updateShowCart(true)
+        }
+    }
+
     function useOutsideAlerter(ref) {
         useEffect(() => {
             function handleClickOutside(event) {
@@ -131,7 +140,7 @@ function Header() {
             </a>
             <div
                 className={style.cartDiv}
-                onClick={(e) => updateShowCart(true)}
+                onClick={(e) => showCartValid()}
             >
                 <div className={style.cartIcon}>
                     <Image src="/shopping-cart.svg" alt="shopping cart" fill />
