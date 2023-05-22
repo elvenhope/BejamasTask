@@ -8,20 +8,18 @@ import FeaturedItem from '@/app/components/FeaturedItem'
 import Image from 'next/image'
 import Header from '@/app/components/Header'
 
-const dev = process.env.NODE_ENV !== 'production'
-const server = dev
-    ? 'http://localhost:3000'
-    : 'https://your_deployment.server.com'
-
 async function getProducts(page, sorting) {
     try {
-        let response = await fetch(`${server}/api/products/${page}`, {
-            method: "POST",
-            body: JSON.stringify(sorting),
-            headers: {
-                'content-type': 'application/json',
-            },
-        })
+        let response = await fetch(
+            `${process.env.NEXT_PUBLIC_BASE_URL}/api/products/${page}`,
+            {
+                method: 'POST',
+                body: JSON.stringify(sorting),
+                headers: {
+                    'content-type': 'application/json',
+                },
+            }
+        )
         let readyResponse = await response.json()
         let products = readyResponse.products
         let curPage = readyResponse.curPage

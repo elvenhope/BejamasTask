@@ -1,14 +1,12 @@
 import style from '@/app/styles/homepage.module.scss'
 import Products from '@/app/components/Products'
 
-const dev = process.env.NODE_ENV !== 'production'
-const server = dev
-    ? 'http://localhost:3000'
-    : 'https://your_deployment.server.com'
-
 async function getProducts() {
     try {
-        let response = await fetch(`${server}/api/products/1`)
+        console.log(process.env.NEXT_PUBLIC_BASE_URL)
+        let response = await fetch(
+            `${process.env.NEXT_PUBLIC_BASE_URL}/api/products/1`
+        )
         let readyResponse = await response.json()
         let products = readyResponse.products
         let curPage = readyResponse.curPage
