@@ -24,7 +24,7 @@ async function getProducts(page, sorting) {
                 'content-type': 'application/json',
             },
         })
-        let readyResponse = await response.json()
+        let readyResponse = response
         let products = readyResponse.products
         let curPage = readyResponse.curPage
         let numOfPages = readyResponse.pages
