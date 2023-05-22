@@ -89,16 +89,12 @@ function products(props) {
 
     async function changePage(page, sorting) {
         let sortingParam = sorting
-        console.log(orderChoice)
-        console.log(orderDirection)
         if (sortingParam == null) {
-            console.log('Came here')
             sortingParam = {
                 orderChoice: orderChoice,
                 orderDirection: orderDirection,
             }
         }
-        console.log(sortingParam)
         let data = await getProducts(page, sortingParam)
         updateProducts(data.products)
         updateCurPage(data.curPage)

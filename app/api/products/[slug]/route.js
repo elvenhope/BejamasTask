@@ -45,7 +45,6 @@ function compareByPrice(a, b) {
 }
 
 export async function GET(request, { params }) {
-    console.log("Hello");
     const page = params.slug
     const orderChoice = 'Alphabetic'
     const orderDirection = 'Increasing'

@@ -3,7 +3,6 @@ import Products from '@/app/components/Products'
 
 async function getProducts() {
     try {
-        console.log(process.env.SERVER)
         let response = await fetch(`${process.env.SERVER}/api/products/1`)
         let readyResponse = await response.json()
         let products = readyResponse.products
