@@ -7,24 +7,13 @@ import Pagination from './Pagination'
 import FeaturedItem from '@/app/components/FeaturedItem'
 import Image from 'next/image'
 import Header from '@/app/components/Header'
-import useSWR from 'swr'
-
-const fetcher = (...args) => fetch(...args).then((res) => res.json())
+import axios from 'axios'
 
 async function getProducts(page, sorting) {
     try {
-        const { response, error } = useSWR(
-            `${process.env.SERVER}/api/products/${page}`,
-            fetcher
-        )
-        await fetcher(address, {
-            method: 'POST',
-            body: JSON.stringify(sorting),
-            headers: {
-                'content-type': 'application/json',
-            },
-        })
-        let readyResponse = response
+        let response = await axios.post(`/api/products/${page}`, sorting);
+
+        let readyResponse = response.data
         let products = readyResponse.products
         let curPage = readyResponse.curPage
         let numOfPages = readyResponse.pages
@@ -96,6 +85,7 @@ function products(props) {
             }
         }
         let data = await getProducts(page, sortingParam)
+        console.log(data);
         updateProducts(data.products)
         updateCurPage(data.curPage)
         updateNumOfPages(data.numOfPages)
