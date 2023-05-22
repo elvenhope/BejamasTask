@@ -7,19 +7,23 @@ import Pagination from './Pagination'
 import FeaturedItem from '@/app/components/FeaturedItem'
 import Image from 'next/image'
 import Header from '@/app/components/Header'
+import useSWR from 'swr'
+
+const fetcher = (...args) => fetch(...args).then((res) => res.json())
 
 async function getProducts(page, sorting) {
     try {
-        let response = await fetch(
-            `${process.env.NEXT_PUBLIC_BASE_URL}/api/products/${page}`,
-            {
-                method: 'POST',
-                body: JSON.stringify(sorting),
-                headers: {
-                    'content-type': 'application/json',
-                },
-            }
+        const { response, error } = useSWR(
+            `${process.env.SERVER}/api/products/${page}`,
+            fetcher
         )
+        await fetcher(address, {
+            method: 'POST',
+            body: JSON.stringify(sorting),
+            headers: {
+                'content-type': 'application/json',
+            },
+        })
         let readyResponse = await response.json()
         let products = readyResponse.products
         let curPage = readyResponse.curPage
@@ -78,21 +82,23 @@ function products(props) {
     const [maxSet, updateMaxSet] = useState(props.maxSet)
     const [ordered_Pages, updateOrdered_Pages] = useState(props.ordered_Pages)
     const [orderChoice, updateOrderChoice] = useState(props.orderChoice)
-    const [orderDirection, updateOrderDirection] = useState(props.orderDirection)
+    const [orderDirection, updateOrderDirection] = useState(
+        props.orderDirection
+    )
     const scrollPoint = useRef(null)
 
     async function changePage(page, sorting) {
         let sortingParam = sorting
-        console.log(orderChoice);
-        console.log(orderDirection);
-        if(sortingParam == null) {
-            console.log("Came here");
+        console.log(orderChoice)
+        console.log(orderDirection)
+        if (sortingParam == null) {
+            console.log('Came here')
             sortingParam = {
                 orderChoice: orderChoice,
                 orderDirection: orderDirection,
             }
         }
-        console.log(sortingParam);
+        console.log(sortingParam)
         let data = await getProducts(page, sortingParam)
         updateProducts(data.products)
         updateCurPage(data.curPage)
@@ -103,9 +109,9 @@ function products(props) {
         updateOrderChoice(data.orderChoice)
         updateOrderDirection(data.orderDirection)
     }
-    
+
     function handleChange(event) {
-        let newChoice = event.target.value;
+        let newChoice = event.target.value
         // CALL FUNC
         let sortingParam = {
             orderChoice: newChoice,
@@ -118,10 +124,10 @@ function products(props) {
     function changeDirection() {
         let NewDirection
 
-        if(orderDirection == "Decreasing") {
-            NewDirection = "Increasing"
+        if (orderDirection == 'Decreasing') {
+            NewDirection = 'Increasing'
         } else {
-            NewDirection = "Decreasing"
+            NewDirection = 'Decreasing'
         }
 
         let sortingParam = {

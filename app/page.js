@@ -3,10 +3,8 @@ import Products from '@/app/components/Products'
 
 async function getProducts() {
     try {
-        console.log(process.env.NEXT_PUBLIC_BASE_URL)
-        let response = await fetch(
-            `${process.env.NEXT_PUBLIC_BASE_URL}/api/products/1`
-        )
+        console.log(process.env.SERVER)
+        let response = await fetch(`${process.env.SERVER}/api/products/1`)
         let readyResponse = await response.json()
         let products = readyResponse.products
         let curPage = readyResponse.curPage
