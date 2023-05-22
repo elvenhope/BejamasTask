@@ -110,6 +110,79 @@
 	cursor: pointer;
 }
 
+.sort {
+	display: flex;
+	justify-content: space-evenly;
+	align-items: center;
+	padding-bottom: 60px;
+	max-width: 250px;
+	margin-left: auto;
+	.sortText {
+		font-weight: 400;
+		font-size: 22px;
+		color: #9B9B9B;
+	}
+
+	select {
+		// A reset of styles, including removing the default dropdown arrow
+		appearance: none;
+		background-color: transparent;
+		border: none;
+		padding: 0 1em 0 0;
+		margin: 0;
+		width: 100%;
+		font-family: inherit;
+		font-size: inherit;
+		cursor: inherit;
+		line-height: inherit;
+
+		// Stack above custom arrow
+		z-index: 1;
+
+		// Remove dropdown arrow in IE10 & IE11
+		// @link https://www.filamentgroup.com/lab/select-css.html
+		&::-ms-expand {
+			display: none;
+		}
+
+		// Remove focus outline, will add on alternate element
+		outline: none;
+	}
+
+	.select {
+		display: grid;
+		grid-template-areas: "select";
+		align-items: center;
+		position: relative;
+
+		select,
+		&::after {
+			grid-area: select;
+		}
+
+		min-width: 120px;
+
+		border: 1px solid var(--select-border);
+		border-radius: 0.25em;
+		padding: 0.25em 0.5em;
+
+		font-size: 1.25rem;
+		cursor: pointer;
+		line-height: 1.1;
+
+		// Custom arrow
+		&:not(.select--multiple)::after {
+			content: "";
+			justify-self: end;
+			width: 20px;
+			height: 20px;
+			background-image: url('../../public/DownArrow.svg');
+			background-position: 50% 50%;
+			background-repeat: no-repeat;
+		}
+	}
+}
+
 
 @media only screen and (min-width: 992px) {
 	.pageContainer {
@@ -121,8 +194,9 @@
 	}
 
 	.ImageDiv {
-		max-width: 290px;
+		max-width: 380px;
 	}
+
 	.addToCartBtn:hover {
 		display: block;
 	}

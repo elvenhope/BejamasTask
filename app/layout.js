@@ -1,6 +1,5 @@
 import './globals.scss'
 import { Archivo } from 'next/font/google'
-import { GlobalContextProvider } from './Context/store'
 
 const archivo = Archivo({ subsets: ['latin'] })
 
@@ -13,7 +12,7 @@ export default function RootLayout({ children }) {
     return (
         <html lang="en">
             <body className={archivo.className}>
-                <GlobalContextProvider>{children}</GlobalContextProvider>
+                {children}
             </body>
         </html>
     )

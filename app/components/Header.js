@@ -10,10 +10,17 @@ function Header() {
     const wrapperRef = useRef(null)
     useOutsideAlerter(wrapperRef)
 
-    window.addEventListener('storage', () => {
-        updateShowCart(true)
-        updateCart(JSON.parse(localStorage.getItem('Cart')))
-        // ...
+    useEffect(function mount() {
+        function update() {
+            updateShowCart(true)
+            updateCart(JSON.parse(localStorage.getItem('Cart')))
+        }
+
+        window.addEventListener('storage', update)
+
+        return function unMount() {
+            window.removeEventListener('storage', update)
+        }
     })
 
     useEffect(() => {

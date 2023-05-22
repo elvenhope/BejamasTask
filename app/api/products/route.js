@@ -1,6 +1,5 @@
 import { NextResponse } from 'next/server'
-
-import clientPromise from '../../lib/mongodb'
+import clientPromise from '@/app/lib/mongodb'
 
 function chunkArray(myArray, chunk_size) {
     let index = 0
@@ -25,30 +24,58 @@ function generateNumbers(numOfPages) {
     return payload
 }
 
+function compareByName(a, b) {
+    if (a.name < b.name) {
+        return -1
+    }
+    if (a.name > b.name) {
+        return 1
+    }
+    return 0
+}
 
-export async function GET() {
+function compareByPrice(a, b) {
+    if (a.price < b.price) {
+        return -1
+    }
+    if (a.price > b.price) {
+        return 1
+    }
+    return 0
+}
+
+export async function GET(request, { params }) {
+    const page = params.slug
+    const orderChoice = 'Alphabetic'
+    const orderDirection = 'Increasing'
     try {
         const client = await clientPromise
         const db = client.db(process.env.DB_NAME)
-        const products = await db
+        let products = await db
             .collection(process.env.ProductCollection_NAME)
             .find({})
+            .skip((page - 1) * 6)
             .limit(6)
             .toArray()
+
+        if (orderChoice == 'Alphabetic') products.sort(compareByName)
+        if (orderChoice == 'Price') products.sort(compareByPrice)
 
         const numberOfPages = Math.ceil(
             (await db.collection(process.env.ProductCollection_NAME).count()) /
                 6
         )
+
         return NextResponse.json({
             products: products,
             pages: numberOfPages,
-            curPage: 1,
+            curPage: page,
             minSet: 0,
             maxSet: Math.ceil(numberOfPages / 4) - 1,
             ordered_pages: generateNumbers(numberOfPages),
+            orderChoice: orderChoice,
+            orderDirection: orderDirection,
         })
-
     } catch (e) {
         console.error(e)
         throw new Error(e).message
@@ -56,28 +83,41 @@ export async function GET() {
 }
 
 export async function POST(request) {
+    const page = 1
+    const orderChoice = request?.body?.orderChoice || 'Alphabetic'
+    const orderDirection = request?.body?.orderDirection || 'Decreasing'
     try {
         const client = await clientPromise
         const db = client.db(process.env.DB_NAME)
-
-        const post = await db
+        let products = await db
             .collection(process.env.ProductCollection_NAME)
-            .res.json(post)
-    } catch (e) {
-        throw new Error(e).message
-    }
-}
+            .find({})
+            .skip((page - 1) * 6)
+            .limit(6)
+            .toArray()
 
+        if (orderChoice == 'Alphabetic') products.sort(compareByName)
+        if (orderChoice == 'Price') products.sort(compareByPrice)
 
+        if (orderDirection == 'Decreasing') {
+            products = products.reverse()
+        }
 
-import { NextResponse } from 'next/server'
-import clientPromise from '@/app/lib/mongodb'
+        const numberOfPages = Math.ceil(
+            (await db.collection(process.env.ProductCollection_NAME).count()) /
+                6
+        )
 
-
-export async function GET(request, { params }) {
-    const page = params.slug
-    try {
-        
+        return NextResponse.json({
+            products: products,
+            pages: numberOfPages,
+            curPage: page,
+            minSet: 0,
+            maxSet: Math.ceil(numberOfPages / 4) - 1,
+            ordered_pages: generateNumbers(numberOfPages),
+            orderChoice: orderChoice,
+            orderDirection: orderDirection,
+        })
     } catch (e) {
         console.error(e)
         throw new Error(e).message
